@@ -1,4 +1,6 @@
 import cplex
+import matplotlib.pyplot as plt
+
 
 def solve_optimization():
     problem = cplex.Cplex()
@@ -30,5 +32,21 @@ def solve_optimization():
     for i, name in enumerate(["XA", "XB", "XC"]):
         print(f"{name}: {solution_values[i]}")
 
+    return solution_values
+
+
+def plot_results(solution_values):
+    products = ["XA", "XB", "XC"]
+    values = solution_values
+
+    plt.figure(figsize=(10, 6))
+    plt.bar(products, values, color=['blue', 'orange', 'green'])
+    plt.xlabel('Products')
+    plt.ylabel('Number of Batches')
+    plt.title('Optimal Number of Batches for Each Product')
+    plt.show()
+
+
 if __name__ == "__main__":
-    solve_optimization()
+    solution_values = solve_optimization()
+    plot_results(solution_values)
